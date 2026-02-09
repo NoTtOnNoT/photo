@@ -3,173 +3,301 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>คลังภาพกิจกรรมสุดอลังการ</title>
+        <title>ภาพกิจกรรม SMTE18</title>
 
         <link
-            href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;500&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap"
             rel="stylesheet">
         <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
         <style>
         :root {
-            --primary-color: #6c5ce7;
-            --bg-gradient: linear-gradient(135deg, #a8c0ff 0%, #3f2b96 100%);
+            --primary-color: #7d5fff;
+            --secondary-color: #3ae374;
+            --accent-color: #ffaf40;
+            --bg-dark: #0f0c29;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+        }
+
+        * {
+            box-sizing: border-box;
+            transition: all 0.3s ease;
         }
 
         body {
             font-family: 'Kanit', sans-serif;
-            background: var(--bg-gradient);
-            background-attachment: fixed;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
             margin: 0;
-            padding: 40px 20px;
+            padding: 0;
             color: white;
             min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background Particles */
+        .circles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .circles li {
+            position: absolute;
+            display: block;
+            list-style: none;
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            animation: animate 25s linear infinite;
+            bottom: -150px;
+            border-radius: 50%;
+        }
+
+        @keyframes animate {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; border-radius: 0; }
+            100% { transform: translateY(-1000px) rotate(720deg); opacity: 0; border-radius: 50%; }
+        }
+
+        /* Header Styling */
+        header {
+            text-align: center;
+            padding: 80px 20px 40px;
         }
 
         h1 {
-            text-align: center;
-            font-size: 2.5rem;
-            text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
-            margin-bottom: 40px;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            margin: 0;
+            background: linear-gradient(to right, #fff, #a8c0ff, #fff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            filter: drop-shadow(0 0 10px rgba(108, 92, 231, 0.5));
         }
 
-        /* ระบบ Grid รองรับ คอม, ไอแพด, มือถือ */
+        .subtitle {
+            font-weight: 300;
+            opacity: 0.8;
+            margin-top: 10px;
+            font-size: 1.1rem;
+        }
+
+        /* Gallery Grid */
         .gallery-container {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
             max-width: 1200px;
             margin: 0 auto;
+            padding: 20px;
         }
 
-        /* การ์ดรูปภาพสไตล์โปร่งแสง (Glassmorphism) */
+        /* Modern Photo Card */
         .photo-card {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            border: 1px solid var(--glass-border);
             overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            cursor: pointer;
+            position: relative;
             text-decoration: none;
             color: white;
-            display: block;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .photo-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 50%; height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent);
+            transition: 0.5s;
+            z-index: 2;
+        }
+
+        .photo-card:hover::before {
+            left: 100%;
         }
 
         .photo-card:hover {
-            transform: translateY(-15px) scale(1.03);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-15px);
+            border-color: var(--primary-color);
+            box-shadow: 0 20px 40px rgba(108, 92, 231, 0.3);
         }
 
         .img-wrapper {
             width: 100%;
-            height: 220px;
+            height: 250px;
             overflow: hidden;
+            position: relative;
         }
 
         .photo-card img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.6s ease;
+            transition: transform 0.8s cubic-bezier(0.2, 1, 0.3, 1);
         }
 
         .photo-card:hover img {
-            transform: scale(1.2) rotate(2deg);
+            transform: scale(1.15);
         }
 
         .info {
-            padding: 20px;
-            text-align: center;
+            padding: 25px;
+            position: relative;
         }
 
         .info h3 {
             margin: 0;
-            font-size: 1.2rem;
+            font-size: 1.4rem;
+            color: #fff;
         }
 
         .info p {
-            margin: 10px 0 0;
-            opacity: 0.8;
+            margin: 10px 0 20px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: rgba(255,255,255,0.7);
             font-weight: 300;
         }
 
-        /* ปุ่มดูเพิ่มเติม */
+        /* Interactive Button */
         .btn-view {
-            margin-top: 15px;
-            display: inline-block;
-            padding: 8px 20px;
-            background: white;
-            color: var(--primary-color);
-            border-radius: 50px;
-            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 24px;
+            background: linear-gradient(45deg, var(--primary-color), #8e44ad);
+            color: white;
+            border-radius: 12px;
+            font-weight: 500;
             font-size: 0.9rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
 
-        /* ปรับแต่งสำหรับมือถือ */
-        @media (max-width: 600px) {
-            h1 { font-size: 1.8rem; }
-            .gallery-container { grid-template-columns: 1fr; }
+        .photo-card:hover .btn-view {
+            background: white;
+            color: var(--primary-color);
+            transform: scale(1.05);
         }
+
+        /* Footer */
+        footer {
+            margin-top: 100px;
+            padding: 60px 20px;
+            background: rgba(0,0,0,0.3);
+            text-align: center;
+        }
+
+        .footer-content p { margin: 5px 0; opacity: 0.6; }
+        .dev-name { 
+            font-weight: 600; 
+            letter-spacing: 2px; 
+            color: var(--accent-color);
+            margin-top: 10px !important;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            header { padding-top: 40px; }
+            .gallery-container { grid-template-columns: 1fr; padding: 15px; }
+        }
+
+        /* Particle Positions */
+        .circles li:nth-child(1){ left: 25%; width: 80px; height: 80px; animation-delay: 0s; }
+        .circles li:nth-child(2){ left: 10%; width: 20px; height: 20px; animation-delay: 2s; animation-duration: 12s; }
+        .circles li:nth-child(3){ left: 70%; width: 20px; height: 20px; animation-delay: 4s; }
+        .circles li:nth-child(4){ left: 40%; width: 60px; height: 60px; animation-delay: 0s; animation-duration: 18s; }
     </style>
     </head>
     <body>
 
-        <h1 data-aos="fade-down">🌟 คลังภาพกิจกรรม SMTE18 🌟</h1>
+        <ul class="circles">
+            <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+        </ul>
+
+        <header>
+            <h1 data-aos="zoom-out">SMTE18 Gallery</h1>
+            <p class="subtitle" data-aos="fade-up"
+                data-aos-delay="200">ภาพกิจกรรม ม.4/1 ลูกพ่อกฤต | SINGLE DAD</p>
+        </header>
 
         <div class="gallery-container">
 
-            <a href="https://drive.google.com/drive/folders/1QN8NW6ftnzZXtUAxUHadltB_M_VVX98O?usp=sharing" target="_blank"
-                class="photo-card" data-aos="zoom-in-up">
+            <a
+                href="https://drive.google.com/drive/folders/1xrR6vGccpPDKWCVw8O4ijGlbSkho6sgM?usp=sharing"
+                target="_blank" class="photo-card" data-aos="fade-up">
                 <div class="img-wrapper">
-                    <img
-                        src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=600&q=80"
-                        alt="ทัศนศึกษา">
+                    <img src="ทัศนศึกษา.JPG" alt="ทัศนศึกษา">
                 </div>
                 <div class="info">
-                    <h3>🚌 ทัศนศึกษา ม.4</h3>
+                    <h3><i class="fas fa-bus"></i> ทัศนศึกษา ม.4</h3>
                     <p>สวนพฤกษศาสตร์</p>
-                    <div class="btn-view">เปิด Google Drive</div>
+                    <div class="btn-view">
+                        <span>เปิดคลังภาพ</span>
+                        <i class="fab fa-google-drive"></i>
+                    </div>
                 </div>
             </a>
 
-            <a href="https://drive.google.com/drive/folders/1sL_9G2FuKN0L0n74dz80l5Y7G7uGotTO?usp=sharing" target="_blank"
-                class="photo-card" data-aos="zoom-in-up" data-aos-delay="100">
+            <a
+                href="https://drive.google.com/drive/folders/1W9kFs8TqZzgAP1d8XuxmsmQaPK0E273z?usp=sharing"
+                target="_blank" class="photo-card" data-aos="fade-up"
+                data-aos-delay="100">
                 <div class="img-wrapper">
-                    <img
-                        src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=600&q=80"
-                        alt="PSU lab">
+                    <img src="lab.jpg" alt="PSU lab">
                 </div>
                 <div class="info">
-                    <h3>แล็ป PSU</h3>
-                    <p>PSU</p>
-                    <div class="btn-view">เปิด Google Drive</div>
+                    <h3><i class="fas fa-flask"></i>PSU lab</h3>
+                    <p>แล็ป มอ.</p>
+                    <div class="btn-view">
+                        <span>เปิดคลังภาพ</span>
+                        <i class="fab fa-google-drive"></i>
+                    </div>
                 </div>
             </a>
 
-            <a href="https://drive.google.com/drive/folders/1POwFVoIl_GLUlwuvH8KidWejb40r_uMD?usp=sharing" target="_blank"
-                class="photo-card" data-aos="zoom-in-up" data-aos-delay="200">
+            <a
+                href="https://drive.google.com/drive/folders/1POwFVoIl_GLUlwuvH8KidWejb40r_uMD?usp=sharing"
+                target="_blank" class="photo-card" data-aos="fade-up"
+                data-aos-delay="200">
                 <div class="img-wrapper">
-                    <img
-                        src="วัดภูเขาหลง.PNG"
-                        alt="วัดภูเขาหลง">
+                    <img src="วัดภูเขาหลง.PNG" alt="วัดภูเขาหลง">
                 </div>
                 <div class="info">
-                    <h3>วัดภูเขาหลง</h3>
-                    <p>นะโมตัสสะ ภะคะวะโต อะระหะโต สัมมาสัมพุทธัสสะ</p>
-                    <div class="btn-view">เปิด Google Drive</div>
+                    <h3><i class="fas fa-temple"></i> วัดภูเขาหลง</h3>
+                    <p>อะระหังสัมมาสัมพุทโธภะคะวา</p>
+                    <div class="btn-view">
+                        <span>เปิดคลังภาพ</span>
+                        <i class="fab fa-google-drive"></i>
+                    </div>
                 </div>
             </a>
 
         </div>
 
+        <footer>
+            <div class="footer-content" data-aos="fade-in">
+                <p>ออกแบบและพัฒนาโดย</p>
+                <p class="dev-name">สี่ทับหนึ่งลูกพ่อกฤต | SINGLE DAD</p>
+            </div>
+        </footer>
+
         <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
         <script>
         AOS.init({
-            duration: 1000, // ความเร็วแอนิเมชัน (ms)
-            once: false     // ให้เล่นแอนิเมชันซ้ำเวลาเลื่อนขึ้นลง
+            duration: 1000,
+            once: false,
+            mirror: true
         });
     </script>
     </body>
-</html> 
+</html>
